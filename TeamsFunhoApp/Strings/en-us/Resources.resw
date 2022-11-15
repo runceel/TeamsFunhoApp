@@ -159,7 +159,7 @@
   <data name="Main_SendMessageButton.Content" xml:space="preserve">
     <value>Send</value>
   </data>
-  <data name="Settings_IncomingWebhookUrl.Text" xml:space="preserve">
+  <data name="Settings_IncomingWebhook.Text" xml:space="preserve">
     <value>IncomingWebhook URL</value>
   </data>
   <data name="CloseButtonText" xml:space="preserve">
