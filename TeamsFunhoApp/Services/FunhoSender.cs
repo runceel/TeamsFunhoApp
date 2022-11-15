@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using TeamsFunhoApp.Contracts.Services;
@@ -28,19 +29,30 @@ public class FunhoSender : IFunhoSender
             return (false, "メッセージが空です。");
         }
 
-        var response = await _httpClientFactory.CreateClient().PostAsync(
-            _appSettingsService.IncomingWebhookUrl,
-            new StringContent($$"""
+        var request = new HttpRequestMessage(HttpMethod.Post, _appSettingsService.IncomingWebhookUrl)
+        {
+            Content = new StringContent($$"""
                 {
                     "text": "{{message}}"
                 }
-                """));
-
-        if (!response.IsSuccessStatusCode)
+                """,
+                Encoding.UTF8,
+                "application/json"),
+        };
+        try
         {
-            return (false, $"エラーコード: {response.StatusCode}");
-        }
+            var response = await _httpClientFactory.CreateClient().SendAsync(request);
 
-        return (true, null);
+            if (!response.IsSuccessStatusCode)
+            {
+                return (false, $"エラーコード: {response.StatusCode}");
+            }
+
+            return (true, null);
+        }
+        catch (HttpRequestException ex)
+        {
+            return (false, $"エラーメッセージ: {ex.Message}({ex.StatusCode?.ToString() ?? "None"})");
+        }
     }
 }

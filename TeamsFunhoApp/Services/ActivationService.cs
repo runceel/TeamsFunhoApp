@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-
+using System.Diagnostics;
 using TeamsFunhoApp.Activation;
 using TeamsFunhoApp.Contracts.Services;
 using TeamsFunhoApp.Views;
@@ -42,6 +42,7 @@ public class ActivationService : IActivationService
         await HandleActivationAsync(activationArgs);
 
         // Activate the MainWindow.
+        App.MainWindow.SetWindowSize(_appSettingsService.WindowWidth, _appSettingsService.WindowHeight);
         App.MainWindow.Activate();
 
         // Execute tasks after activation.
@@ -65,9 +66,8 @@ public class ActivationService : IActivationService
 
     private async Task InitializeAsync()
     {
-        await Task.WhenAll(
-            _themeSelectorService.InitializeAsync(),
-            _appSettingsService.InitializeAsync());
+        await _themeSelectorService.InitializeAsync();
+        await _appSettingsService.InitializeAsync();
     }
 
     private async Task StartupAsync()

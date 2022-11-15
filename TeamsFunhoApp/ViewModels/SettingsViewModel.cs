@@ -36,7 +36,7 @@ public partial class SettingsViewModel : ObservableRecipient
     [RelayCommand]
     private async Task UpdateIncomingWebhookUrl()
     {
-        await _appSettingsService.SetIncomingWebhookUrl(IncomingWebhookUrl);
+        await _appSettingsService.SetIncomingWebhookUrlAsync(IncomingWebhookUrl);
     }
 
     [RelayCommand]

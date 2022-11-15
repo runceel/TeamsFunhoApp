@@ -1,11 +1,11 @@
 ﻿namespace TeamsFunhoApp.Contracts.Services;
 public interface IAppSettingsService
 {
-    public string IncomingWebhookUrl
-    {
-        get;
-    }
+    public string IncomingWebhookUrl { get; }
 
+    public int WindowWidth { get; }
+    public int WindowHeight { get; }
     Task InitializeAsync();
-    Task SetIncomingWebhookUrl(string incomingWebhookUrl);
+    Task SetIncomingWebhookUrlAsync(string incomingWebhookUrl);
+    Task SetWindowSizeAsync(int windowWidth, int windowHeight);
 }

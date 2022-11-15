@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
 
@@ -55,6 +56,7 @@ public partial class App : Application
                 // Other Activation Handlers
 
                 // Services
+                services.AddSingleton<IMessenger>(WeakReferenceMessenger.Default);
                 services.AddHttpClient();
                 services.AddSingleton<IFunhoSender, FunhoSender>();
                 services.AddSingleton<IAppSettingsService, AppSettingsService>();
