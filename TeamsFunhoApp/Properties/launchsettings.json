@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "TeamsFunhoApp (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "TeamsFunhoApp (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}
