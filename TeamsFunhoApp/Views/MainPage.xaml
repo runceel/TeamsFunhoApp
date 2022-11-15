@@ -10,18 +10,20 @@
         <helpers:InverseConverter x:Key="InverseConverter" />
     </Page.Resources>
     <Grid>
-        <Grid x:Name="ContentArea" RowDefinitions="Auto,Auto">
+        <Grid x:Name="ContentArea" RowDefinitions="*,Auto">
             <TextBox
                 x:Uid="Main_MessageTextBox"
                 Grid.Row="0"
                 AcceptsReturn="True"
                 IsEnabled="{x:Bind ViewModel.SendMessageCommand.IsRunning, Mode=OneWay, Converter={StaticResource InverseConverter}}"
+                ScrollViewer.VerticalScrollBarVisibility="Auto"
+                ScrollViewer.VerticalScrollMode="Auto"
                 Text="{x:Bind ViewModel.Message, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                 TextWrapping="Wrap" />
             <Button
                 x:Uid="Main_SendMessageButton"
                 Grid.Row="1"
-                Margin="0,5"
+                Margin="0,10,0,15"
                 HorizontalAlignment="Stretch"
                 Command="{x:Bind ViewModel.SendMessageCommand}" />
         </Grid>
