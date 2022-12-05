@@ -118,19 +118,19 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AppDisplayName" xml:space="preserve">
-    <value>Teams Funho-</value>
+    <value>Teams 分報アプリ</value>
   </data>
   <data name="AppDescription" xml:space="preserve">
-    <value>TeamsFunhoApp</value>
+    <value>Teams 分報アプリ</value>
   </data>
   <data name="Shell_Main.Content" xml:space="preserve">
-    <value>Funho</value>
+    <value>分報</value>
   </data>
   <data name="Settings_Personalization.Text" xml:space="preserve">
     <value>Personalization</value>
   </data>
   <data name="Settings_Theme.Text" xml:space="preserve">
-    <value>Theme</value>
+    <value>テーマ</value>
   </data>
   <data name="Settings_Theme_Light.Content" xml:space="preserve">
     <value>Light</value>
@@ -142,7 +142,7 @@
     <value>Default</value>
   </data>
   <data name="Settings_About.Text" xml:space="preserve">
-    <value>About this application</value>
+    <value>Teams の分報を送信するアプリです</value>
   </data>
   <data name="Settings_AboutDescription.Text" xml:space="preserve">
     <value>TODO: Replace with your app description.</value>
@@ -151,21 +151,21 @@
     <value>Privacy Statement</value>
   </data>
   <data name="SettingsPage_PrivacyTermsLink.NavigateUri" xml:space="preserve">
-    <value>https://example.com/</value>
+    <value>https://example.com</value>
   </data>
   <data name="Main_MessageTextBox.PlaceholderText" xml:space="preserve">
-    <value>What's Happening?</value>
+    <value>今なにしてる？</value>
   </data>
   <data name="Main_SendMessageButton.Content" xml:space="preserve">
-    <value>Send</value>
+    <value>送信</value>
   </data>
   <data name="Settings_IncomingWebhook.Text" xml:space="preserve">
     <value>IncomingWebhook URL</value>
   </data>
   <data name="CloseButtonText" xml:space="preserve">
-    <value>Close</value>
+    <value>閉じる</value>
   </data>
   <data name="ErrorDialogTitle" xml:space="preserve">
-    <value>Information</value>
+    <value>情報</value>
   </data>
 </root>
