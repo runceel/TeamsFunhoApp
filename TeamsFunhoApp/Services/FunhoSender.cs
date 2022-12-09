@@ -1,9 +1,7 @@
-﻿using Accessibility;
-using AdaptiveCards;
+﻿using AdaptiveCards;
 using AngleSharp;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
-using System.Security.Policy;
 using System.Text;
 using TeamsFunhoApp.Contracts.Services;
 
