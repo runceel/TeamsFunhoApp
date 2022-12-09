@@ -61,7 +61,7 @@ public class FunhoSender : IFunhoSender
         var normalizedMessage = message.ReplaceLineEndings();
         var paragraphs = normalizedMessage
             .Split($"{Environment.NewLine}{Environment.NewLine}")
-            .Select(x => new AdaptiveTextBlock(x));
+            .Select(x => new AdaptiveTextBlock(x) { Wrap = true });
         var card = new AdaptiveCard(new AdaptiveSchemaVersion(1, 0));
         card.Body.AddRange(paragraphs);
 
