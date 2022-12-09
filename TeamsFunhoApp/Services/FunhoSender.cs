@@ -81,24 +81,30 @@ public class FunhoSender : IFunhoSender
         activity.Attachments = new List<Attachment> { attachment };
         return JsonConvert.SerializeObject(activity, JsonSerializerSettings);
     }
-    private async Task<string> ProcessTextForMarkdownAsync(string x)
+    private async Task<string> ProcessTextForMarkdownAsync(string paragraphText)
     {
-        if (!Uri.TryCreate(x, UriKind.Absolute, out var _)) return x;
-
-        var label = x;
-        try
+        var words = paragraphText.Split(' ');
+        var proceededWords = await Task.WhenAll(words.Select(async x =>
         {
-            var config = Configuration.Default.WithDefaultLoader();
-            var context = BrowsingContext.New(config);
-            var document = await context.OpenAsync(x);
-            var cellSelector = "title";
-            var cells = document.QuerySelectorAll(cellSelector);
-            label = cells.FirstOrDefault()?.TextContent ?? label;
-        }
-        catch 
-        {
-        }
+            if (!Uri.TryCreate(x, UriKind.Absolute, out var _)) return x;
 
-        return $"[{label}]({x})";
+            var label = paragraphText;
+            try
+            {
+                var config = Configuration.Default.WithDefaultLoader();
+                var context = BrowsingContext.New(config);
+                var document = await context.OpenAsync(x);
+                var cells = document.QuerySelectorAll("title");
+                var titleText = cells.FirstOrDefault()?.TextContent ?? "";
+                label = string.IsNullOrWhiteSpace(titleText) ? label : titleText;
+            }
+            catch
+            {
+            }
+
+            return $"[{label}]({x})";
+        }));
+
+        return string.Join(' ', proceededWords);
     }
 }
