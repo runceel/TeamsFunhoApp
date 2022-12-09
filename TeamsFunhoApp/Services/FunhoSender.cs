@@ -1,6 +1,9 @@
-﻿using AdaptiveCards;
+﻿using Accessibility;
+using AdaptiveCards;
+using AngleSharp;
 using Microsoft.Bot.Schema;
 using Newtonsoft.Json;
+using System.Security.Policy;
 using System.Text;
 using TeamsFunhoApp.Contracts.Services;
 
@@ -32,7 +35,7 @@ public class FunhoSender : IFunhoSender
             return (false, "メッセージが空です。");
         }
 
-        string json = CreateJson(message);
+        string json = await CreateIncomingWebhookJsonAsync(message);
         var request = new HttpRequestMessage(HttpMethod.Post, _appSettingsService.IncomingWebhookUrl)
         {
             Content = new StringContent(json,
@@ -56,11 +59,14 @@ public class FunhoSender : IFunhoSender
         }
     }
 
-    private static string CreateJson(string message)
+    private async Task<string> CreateIncomingWebhookJsonAsync(string message)
     {
         var normalizedMessage = message.ReplaceLineEndings();
-        var paragraphs = normalizedMessage
+        var paragraphTasks = normalizedMessage
             .Split($"{Environment.NewLine}{Environment.NewLine}")
+            .Select(x => x.Trim())
+            .Select(x => ProcessTextForMarkdownAsync(x));
+        var paragraphs = (await Task.WhenAll(paragraphTasks))
             .Select(x => new AdaptiveTextBlock(x) { Wrap = true });
         var card = new AdaptiveCard(new AdaptiveSchemaVersion(1, 0));
         card.Body.AddRange(paragraphs);
@@ -74,5 +80,25 @@ public class FunhoSender : IFunhoSender
         var activity = Activity.CreateMessageActivity();
         activity.Attachments = new List<Attachment> { attachment };
         return JsonConvert.SerializeObject(activity, JsonSerializerSettings);
+    }
+    private async Task<string> ProcessTextForMarkdownAsync(string x)
+    {
+        if (!Uri.TryCreate(x, UriKind.Absolute, out var _)) return x;
+
+        var label = x;
+        try
+        {
+            var config = Configuration.Default.WithDefaultLoader();
+            var context = BrowsingContext.New(config);
+            var document = await context.OpenAsync(x);
+            var cellSelector = "title";
+            var cells = document.QuerySelectorAll(cellSelector);
+            label = cells.FirstOrDefault()?.TextContent ?? label;
+        }
+        catch 
+        {
+        }
+
+        return $"[{label}]({x})";
     }
 }
